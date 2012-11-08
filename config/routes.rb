@@ -1,11 +1,15 @@
 Producer::Application.routes.draw do
 
-  resources :categories
+  root to: 'pages#index'
+  get "pages/index"
 
-    resources :posts do
-      resources :comments, :only => [:create]
-    end
+  resources :posts, only: [:index, :show] do
+    resources :comments, :only => [:create]
+  end
 
-   get "pages/index"
+  namespace :admin do
+    resources :posts
+    resources :categories, except: [:show]
+  end
 
 end
